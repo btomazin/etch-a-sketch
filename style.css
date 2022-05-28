@@ -1,10 +1,6 @@
 .square{
   background-color: white;
-  width: 10px;
-  height: 10px;
-  
-  
-  
+
 }
 .square:hover{
   background-color: black;
@@ -13,11 +9,15 @@
 body{
   background-color: rgb(24, 27, 41);
   color: antiquewhite;
+  margin: 3vw;
 }
 
 #container{
   background-color: blue;
   display: flex;
   flex-flow: wrap;
+  padding: 10px;
+  width: 960px;
+  height: 960px;
   
 }
