@@ -1,11 +1,14 @@
-const container = document.getElementById("container");
+const getContainer = () =>  document.getElementById("container");
 
+function setup(size){
+  createGrid(size);
+  createListeners();
+}
 
-
-let w = 16;
 let clr = "black";
-createGrid(w);
-createListeners();
+setup(16);
+
+
 
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
@@ -17,26 +20,38 @@ function randColor(){
   return "#" + Math.floor(Math.random()*16777215).toString(16);
 }
 
-// RGB.onclick = () =>{
-//   clr = randColor();
-// }
-
-clean.onclick = () =>{
-  removeAllChildNodes(container);
-  w = prompt("Grid size?", w);
-  if (w>100) w=100;
-  createGrid(w);
-  createListeners();
+ RGB.onclick = () =>{
+   clr = randColor();
+   console.log(RGB);
+   if (RGB.textContent === "Black")
+      RGB.textContent = "Random";
+    else
+      RGB.textContent = "Black";
+   
 }
 
-function createGrid (w){
-  for (let  i = 0; i< w; i++){
-    for (let j = 0; j< w; j++){
+clean.onclick = () =>{
+  let gSize = prompt("Grid size?", '');
+  if (gSize>100){ 
+    gSize=100;
+  }
+  else if (gSize<0 || isNaN(gSize)|| gSize==='') 
+    gSize=16;
+  
+  if (gSize!= null){
+    removeAllChildNodes(getContainer());
+    setup(gSize);
+  }
+}
+
+function createGrid (size){
+  for (let  i = 0; i< size; i++){
+    for (let j = 0; j< size; j++){
       let square = document.createElement('div');
       square.setAttribute('class', 'square');
-      square.style.setProperty("width", 960/w + "px");
-      square.style.setProperty("height", 960/w+ "px");
-      container.appendChild(square);
+      square.style.setProperty("width", 960/size + "px");
+      square.style.setProperty("height", 960/size+ "px");
+      getContainer().appendChild(square);
     }
   }
 }
@@ -45,7 +60,7 @@ function createListeners(){
   const grid = document.querySelectorAll(".square");
 
   grid.forEach(sq => {
-    sq.addEventListener("mouseover", e =>{
+    sq.addEventListener("mouseout", e =>{
       sq.style.setProperty('background-color', "black");    
     });
   });
