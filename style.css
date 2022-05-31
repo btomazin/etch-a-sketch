@@ -6,6 +6,8 @@
   background-color: black;
 }
 
+
+
 body{
   background-color: rgb(24, 27, 41);
   color: antiquewhite;
@@ -25,7 +27,7 @@ button{
 }
 
 #container{
-  background-color: blue;
+  border: solid 5px;
   display: flex;
   flex-flow: wrap;
   padding: 10px;

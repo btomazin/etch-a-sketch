@@ -1,14 +1,17 @@
-const getContainer = () =>  document.getElementById("container");
+function getContainer() {
+  return document.getElementById("container");
+}
+
+function getColor() {
+  return document.getElementById("RGB").textContent;
+}
 
 function setup(size){
   createGrid(size);
   createListeners();
 }
 
-let clr = "black";
 setup(16);
-
-
 
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
@@ -22,7 +25,6 @@ function randColor(){
 
  RGB.onclick = () =>{
    clr = randColor();
-   console.log(RGB);
    if (RGB.textContent === "Black")
       RGB.textContent = "Random";
     else
@@ -56,12 +58,37 @@ function createGrid (size){
   }
 }
 
+function darken(sq){
+  let brightness = sq.style.filter;
+  let num = parseInt(brightness.match(/\d+/g));
+  if (num > 0){
+    num = num - 10;
+    sq.style.filter = "brightness(" + num + "%)";
+  }
+}
+
+function colorSquare (sq) {
+  if (getColor() === "Random") {
+    sq.style.setProperty('background-color', "black");  
+    sq.setAttribute('id', 'black');
+  } else {
+    if (sq.id !== 'black' && sq.className !== 'colored') {
+      sq.style.setProperty('background-color', randColor());
+      sq.setAttribute('class', 'colored');
+      sq.style.filter = "brightness(100%)";
+    } else {
+        darken(sq);
+    }
+  }
+}
+
 function createListeners(){
   const grid = document.querySelectorAll(".square");
 
   grid.forEach(sq => {
     sq.addEventListener("mouseout", e =>{
-      sq.style.setProperty('background-color', "black");    
-    });
-  });
+        colorSquare(sq);
+      } 
+    )}
+  );
 }
